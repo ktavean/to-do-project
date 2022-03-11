@@ -1,4 +1,3 @@
-import { main } from "envinfo";
 import "./mainpart.css";
 
 const mainpart = () => {
@@ -7,11 +6,22 @@ const mainpart = () => {
     let mainpart = document.createElement("div");
     mainpart.setAttribute("id", "mainpart");
 
+    let input = document.createElement("input");
+    input.setAttribute("type", "text");
+    mainpart.appendChild(input);
+
     let btn = document.createElement("button");
+    btn.textContent = "Press me!";
     btn.addEventListener("click", () => {
-        let task = new projectFactory("test");
+        let task = new projectFactory(input.value);
+        task.entries.push("test2");
         let p = document.createElement("p");
         p.textContent = task.name;
+        p.addEventListener("click", () => {
+            let entry = document.createElement("p");
+            entry.textContent = task.entries[0];        //loop through aici
+            mainpart.appendChild(entry);
+        })
         mainpart.appendChild(p);
     })
     mainpart.appendChild(btn);
@@ -19,9 +29,9 @@ const mainpart = () => {
     container.appendChild(mainpart);
 }
 
-function projectFactory(name) {
+function projectFactory(name, entries=[]) {
     this.name = name;
-    entries = [];
+    this.entries = entries;
     return { name, entries }
 }
 
