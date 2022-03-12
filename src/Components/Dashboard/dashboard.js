@@ -1,5 +1,6 @@
 import "./dashboard.css";
 import { showTaskList } from "../Tasklist/tasklist";
+import { changeTitle } from "../Header/header"
 
 const dashboard = () => {
     let container = document.querySelector("#content");
@@ -16,12 +17,13 @@ const dashboard = () => {
     let btn = document.createElement("button");
     btn.textContent = "Press me!";
     btn.addEventListener("click", () => {
-        let task = new projectFactory(input.value);
+        let project = new projectFactory(input.value);
         let p = document.createElement("p");
         p.setAttribute("class", "project");
-        p.textContent = task.name;
+        p.textContent = project.name;
         p.addEventListener("click", () => {
-            showTaskList(task);
+            showTaskList(project);
+            changeTitle(project.name);
         })
         dashboard.appendChild(p);
     })

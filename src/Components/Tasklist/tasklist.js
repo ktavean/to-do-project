@@ -7,11 +7,14 @@ const buildDOM = () => {
     tasklist.setAttribute("id", "tasklist");
     
     container.appendChild(tasklist);
+
 }
 
 const grabTaskList = () => {
     return document.querySelector("#tasklist");
 }
+
+// populates the tasklist, makes sure that if an item is done it's checked, crossed and vice-versa.
 
 const showTaskList = (project) => {
     
@@ -41,32 +44,38 @@ const showTaskList = (project) => {
         taskList.appendChild(task);
     }
 
-    addToTaskList(project);
+    showForm(project);
 }
 
-const addToTaskList = (project) => {
-    
-    let taskList = grabTaskList();
+// displays the input and button so you can add new tasks, then re-populates the tasklist
 
-    let input = document.createElement("input");
-    input.setAttribute("type", "text");
+const showForm = (project) => {
+    
+    let form = document.querySelector("#newTask");
 
     let btn = document.createElement("button");
     btn.textContent = "Add entry";
     btn.addEventListener("click", () => {
-        if (input.value) {
-            let task = {
-                value: input.value,
-                done: false
-            }
-            project.entries.push(task);
-            showTaskList(project);
-        }
+        form.classList.toggle("hidden");
     })
 
-    taskList.appendChild(input);
-    taskList.appendChild(btn);
+    if (!document.querySelector("#submit")) {
+        let submit = document.createElement("button");
+        submit.setAttribute("id", "submit");
+        submit.textContent = "Add task";
+        form.appendChild(submit);
+        submit.addEventListener("click", () => {
+            addToTaskList(project);
+        });
+    }
+
+    grabTaskList().appendChild(btn);
+
 }
+
+// code is dumpster fire, :(
+
+// removes all elements from within the tasklist to re-populate
 
 const emptyAll = () => {
     let tasklist = grabTaskList();
@@ -78,4 +87,29 @@ const emptyAll = () => {
     }
 }
 
-export { buildDOM, showTaskList }
+const grabFormInfo = () => {
+    let name = document.querySelector("#name").value;
+    let desc = document.querySelector("#desc").value;
+    let ddl = document.querySelector("#ddl").value;
+    let prio = document.querySelector("#prio").value;
+
+    return {name, desc, ddl, prio};
+}
+
+const addToTaskList = (project) => {
+    debugger;
+    let formInfo = grabFormInfo();
+    if (formInfo.name) {
+        let task = {
+            value: formInfo.name,
+            desc: formInfo.desc,
+            ddl: formInfo.ddl,
+            prio: formInfo.prio,
+            done: false
+        }
+        project.entries.push(task);
+        showTaskList(project);
+    }
+}
+
+export { buildDOM, showTaskList };
