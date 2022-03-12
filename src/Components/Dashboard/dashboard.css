@@ -3,3 +3,8 @@
     grid-row: span 2;
     background-color: red;
 }
+
+.project {
+    cursor: pointer;
+    font-size: 1.5rem;
+}

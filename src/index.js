@@ -1,9 +1,9 @@
 import "./index.css";
 import dashboard from "./Components/Dashboard/dashboard";
 import header from "./Components/Header/header";
-import mainpart from "./Components/Mainpart/mainpart";
+import {buildDOM} from "./Components/Tasklist/tasklist";
 
 
 dashboard();
 header();
-mainpart();
+buildDOM();
