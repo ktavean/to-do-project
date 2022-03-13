@@ -26,8 +26,8 @@ const changeTitle = (project) => {
     let delProj = document.querySelector("#delProj");
     delProj.setAttribute("src", "./assets/icons/delete.svg");
     delProj.addEventListener("click", () => {
+        delProject(title.textContent);
         title.textContent = "To-do list";
-        delProject(project);
         emptyAll();
         delProj.setAttribute("src", "");
     });

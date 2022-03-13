@@ -69,7 +69,7 @@ const showTaskList = (project) => {
         let pName = document.createElement("p");
         pName.setAttribute("class", "name");
         pName.textContent = `${project.entries[i].value}`;
-        project.entries[i].done ? (chkbox.checked = true, task.classList.add("crossed")) : chkbox.checked = false;
+        project.entries[i].done ? (chkbox.classList.add("checked"), task.classList.add("crossed")) : false;
 
         let pDesc = document.createElement("p");
         pDesc.setAttribute("class", "desc");
@@ -167,10 +167,16 @@ const createForm = (project, btn) => {
     prioSelect.appendChild(urgent);
     prioSelect.appendChild(critical);
 
-    taskList.addEventListener("keypress", (e) => {
-        if (e.code === "Enter") {
-            addToTaskList(project);
-            deleteForm(form);
+    form.addEventListener("keydown", (e) => {
+        switch (e.code) {
+            case "Enter":
+                addToTaskList(project);
+                form.remove();
+                break;
+            case "Escape":
+                form.remove();
+                showTaskList(project);
+                break;
         }
     })
 
@@ -192,14 +198,6 @@ const showForm = (project) => {
     })
 
     grabTaskList().appendChild(btn);
-
-}
-
-const deleteForm = (form) => {
-    let count = form.childElementCount;
-    for (let i = 0; i < count; i++) {
-        form.children[0].remove();
-    }
 
 }
 

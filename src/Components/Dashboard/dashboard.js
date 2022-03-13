@@ -50,12 +50,11 @@ const dashboard = () => {
     container.appendChild(dashboard);
 }
 
-const delProject = (project) => {
+const delProject = (projectName) => {
     let bottomPart = document.querySelector("#bottomPart");
     for (let element of bottomPart.children) {
-        if (element.textContent === project.name) {
+        if (element.textContent === projectName) {
             element.remove();
-            project = null;
         }
     }
 }
