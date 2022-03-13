@@ -127,45 +127,25 @@ const showTaskList = (project) => {
 
 const createForm = (project, btn) => {
 
-    btn.classList.add("disabled");
+    btn.remove();
 
-    let form = document.querySelector("#newTask");
+    let taskList = grabTaskList();
 
-    let close = document.createElement("button");
-    close.setAttribute("type", "button");
-    close.setAttribute("id", "close");
-    close.textContent = "X";
-    close.addEventListener("click", () => {
-        deleteForm(form);
-        btn.classList.remove("disabled");
-    });
+    let form = document.createElement("div");
+    form.setAttribute("class", "task");
 
-    // name, desc, deadline, prio
-
-    let nameLabel = document.createElement("label");
-    nameLabel.setAttribute("for", "name");
-    nameLabel.textContent = "Task name:"
     let nameInput = document.createElement("input");
     nameInput.setAttribute("type", "text");
     nameInput.setAttribute("id", "name");
 
-    let descLabel = document.createElement("label");
-    descLabel.setAttribute("for", "desc");
-    descLabel.textContent = "Task description:"
     let descInput = document.createElement("input");
     descInput.setAttribute("type", "text");
     descInput.setAttribute("id", "desc");
 
-    let ddlLabel = document.createElement("label");
-    ddlLabel.setAttribute("for", "ddl");
-    ddlLabel.textContent = "Task deadline:"
     let ddlInput = document.createElement("input");
     ddlInput.setAttribute("type", "date");
     ddlInput.setAttribute("id", "ddl");
 
-    let prioLabel = document.createElement("label");
-    prioLabel.setAttribute("for", "prio");
-    prioLabel.textContent = "Task priority:"
     let prioSelect = document.createElement("select");
     prioSelect.setAttribute("id", "prio");
 
@@ -187,22 +167,19 @@ const createForm = (project, btn) => {
     prioSelect.appendChild(urgent);
     prioSelect.appendChild(critical);
 
-    // submit button
+    taskList.addEventListener("keypress", (e) => {
+        if (e.code === "Enter") {
+            addToTaskList(project);
+            deleteForm(form);
+        }
+    })
 
-    let submit = document.createElement("button");
-    submit.setAttribute("type", "button");
-    submit.setAttribute("id", "submit");
-    submit.textContent = "Add task";
-    submit.addEventListener("click", () => {
-        addToTaskList(project);
-        deleteForm(form);
-    });
-
-    let formArr = [close, nameLabel, nameInput, descLabel, descInput, ddlLabel, ddlInput, prioLabel, prioSelect, submit]
+    let formArr = [nameInput, descInput, ddlInput, prioSelect]
     for (let element of formArr) {
         form.appendChild(element);
     }
-    form.classList.toggle("hidden");
+
+    taskList.appendChild(form);
 }
 
 const showForm = (project) => {
@@ -223,7 +200,7 @@ const deleteForm = (form) => {
     for (let i = 0; i < count; i++) {
         form.children[0].remove();
     }
-    form.classList.toggle("hidden");
+
 }
 
 // code is dumpster fire, :(
