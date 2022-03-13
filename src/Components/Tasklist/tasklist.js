@@ -49,28 +49,72 @@ const showTaskList = (project) => {
 
 // displays the input and button so you can add new tasks, then re-populates the tasklist
 
-const showForm = (project) => {
-    
+const createForm = (project, btn) => {
+
+    btn.classList.add("disabled");
+
     let form = document.querySelector("#newTask");
+
+    let nameLabel = document.createElement("label");
+    nameLabel.setAttribute("for", "name");
+    nameLabel.textContent = "Task name:"
+    let nameInput = document.createElement("input");
+    nameInput.setAttribute("type", "text");
+    nameInput.setAttribute("id", "name");
+
+    let descLabel = document.createElement("label");
+    descLabel.setAttribute("for", "desc");
+    descLabel.textContent = "Task description:"
+    let descInput = document.createElement("input");
+    descInput.setAttribute("type", "text");
+    descInput.setAttribute("id", "desc");
+
+    let ddlLabel = document.createElement("label");
+    ddlLabel.setAttribute("for", "ddl");
+    ddlLabel.textContent = "Task deadline:"
+    let ddlInput = document.createElement("input");
+    ddlInput.setAttribute("type", "text");
+    ddlInput.setAttribute("id", "ddl");
+
+    let prioLabel = document.createElement("label");
+    prioLabel.setAttribute("for", "prio");
+    prioLabel.textContent = "Task priority:"
+    let prioInput = document.createElement("input");
+    prioInput.setAttribute("type", "text");
+    prioInput.setAttribute("id", "prio");
+
+    let submit = document.createElement("button");
+    submit.setAttribute("type", "button");
+    submit.setAttribute("id", "submit");
+    submit.textContent = "Add task";
+    submit.addEventListener("click", () => {
+        addToTaskList(project);
+        deleteForm(form);
+    });
+
+    let formArr = [nameLabel, nameInput, descLabel, descInput, ddlLabel, ddlInput, prioLabel, prioInput, submit]
+    for (let element of formArr) {
+        form.appendChild(element);
+    }
+}
+
+const showForm = (project) => {
 
     let btn = document.createElement("button");
     btn.textContent = "Add entry";
     btn.addEventListener("click", () => {
-        form.classList.toggle("hidden");
+        createForm(project, btn);
     })
-
-    if (!document.querySelector("#submit")) {
-        let submit = document.createElement("button");
-        submit.setAttribute("id", "submit");
-        submit.textContent = "Add task";
-        form.appendChild(submit);
-        submit.addEventListener("click", () => {
-            addToTaskList(project);
-        });
-    }
 
     grabTaskList().appendChild(btn);
 
+}
+
+const deleteForm = (form) => {
+    let count = form.childElementCount;
+    for (let i = 0; i < count; i++) {
+        form.children[0].remove();
+    }
 }
 
 // code is dumpster fire, :(
@@ -97,7 +141,6 @@ const grabFormInfo = () => {
 }
 
 const addToTaskList = (project) => {
-    debugger;
     let formInfo = grabFormInfo();
     if (formInfo.name) {
         let task = {

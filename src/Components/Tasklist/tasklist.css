@@ -11,3 +11,7 @@
 .crossed {
     text-decoration: line-through;
 }
+
+.disabled {
+    pointer-events: none;
+}
