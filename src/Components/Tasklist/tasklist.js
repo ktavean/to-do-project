@@ -21,6 +21,12 @@ const showTaskList = (project) => {
     let taskList = grabTaskList();
 
     emptyAll()
+
+    let title = document.createElement("h2");
+    title.setAttribute("id", "taskListTitle")
+    title.textContent = "Tasklist";
+    taskList.appendChild(title);
+
     for (let i = 0; i < project.entries.length; i++) {
 
         let task = document.createElement("div");
