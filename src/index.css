@@ -14,5 +14,6 @@ body {
     display: grid;
     grid-template-columns: 0.2fr 1fr;
     grid-template-rows: 0.2fr 2fr;
+    background: #F5F5F5;
 }
 

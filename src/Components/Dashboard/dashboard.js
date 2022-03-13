@@ -16,6 +16,11 @@ const dashboard = () => {
     let bottomPart = document.createElement("div");
     bottomPart.setAttribute("id", "bottomPart");
 
+    let bottomTitle = document.createElement("h2");
+    bottomTitle.textContent = "Projects";
+
+    bottomPart.appendChild(bottomTitle);
+
     let input = document.createElement("input");
     input.setAttribute("type", "text");
     topPart.appendChild(input);
@@ -31,7 +36,7 @@ const dashboard = () => {
         input.value = "";
         p.addEventListener("click", () => {
             showTaskList(project);
-            changeTitle(project.name);
+            changeTitle(project);
         })
         bottomPart.appendChild(p);
     })
@@ -45,10 +50,20 @@ const dashboard = () => {
     container.appendChild(dashboard);
 }
 
+const delProject = (project) => {
+    let bottomPart = document.querySelector("#bottomPart");
+    for (let element of bottomPart.children) {
+        if (element.textContent === project.name) {
+            element.remove();
+            project = null;
+        }
+    }
+}
+
 function projectFactory(name, entries=[]) {
     this.name = name;
     this.entries = entries;
     return { name, entries }
 }
 
-export default dashboard;
+export {dashboard, delProject};

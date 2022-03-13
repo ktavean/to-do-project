@@ -1,27 +1,33 @@
 #tasklist {
     grid-column: 2;
     grid-row: 2;
-    background: yellow;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+#taskListTitle {
+    margin-top: 1rem;
+    color: black;
+}
+
 .task {
-    width: 33rem;
+    width: 45rem;
     display: grid;
-    grid-template-columns: 0.1fr repeat(4, 0.5fr) 0.2fr;
+    grid-template-columns: 0.2fr repeat(4, 1.2fr) 0.2fr;
     align-items: center;
     column-gap: 0.4rem;
+    font-size: 1.3rem;
     justify-items: center;
-    background: white;
     color: black;
     margin-bottom: 0.5rem;
 }
 
 .legendTask {
+    font-size: 1.5rem;
     margin-top: 1rem;
     background: none;
+    color: black;
 }
 
 .topName {
@@ -46,19 +52,19 @@
 
 .chk {
     justify-self: end;
-    margin-right: 0.3rem;
+    cursor: pointer;
 }
 
 .name, .desc {
     justify-self: start;
 }
 
-.crossed {
-    color: gray;
-}
-
 .disabled {
     pointer-events: none;
+}
+
+#del {
+    cursor: pointer;
 }
 
 #taskListTitle {
@@ -78,10 +84,37 @@
     left: 50%;
 }
 
+#addTask {
+    margin-top: 1rem;
+    cursor: pointer;
+}
+
 .hidden {
     visibility: hidden;
 }
 
 #close {
     align-self: flex-end;
+}
+
+.notUrgent {
+    background: lightgreen;
+}
+
+.urgent {
+    background: rgb(173, 173, 0);
+}
+
+.critical {
+    background: red;
+}
+
+.crossed {
+    background: darkgrey;
+    color: black;
+    /* text-decoration: line-through; */
+}
+
+.checked {
+    background: url("../../../dist/assets/icons/checkbox-marked.svg");
 }

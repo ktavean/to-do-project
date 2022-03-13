@@ -62,8 +62,8 @@ const showTaskList = (project) => {
         let task = document.createElement("div");
         task.setAttribute("class", "task");
 
-        let chkbox = document.createElement("input");
-        chkbox.setAttribute("type", "checkbox");
+        let chkbox = document.createElement("img");
+        chkbox.setAttribute("src", "./assets/icons/checkbox-blank-outline.svg");
         chkbox.setAttribute("class", "chk");
 
         let pName = document.createElement("p");
@@ -81,16 +81,30 @@ const showTaskList = (project) => {
 
         let pPrio = document.createElement("p");
         pPrio.setAttribute("class", "prio");
-        pPrio.textContent = `${project.entries[i].prio}`;
+        switch(String(project.entries[i].prio)) {
+            case "3":
+                task.classList.add("notUrgent");
+                pPrio.textContent = "Not urgent";
+                break
+            case "2":
+                task.classList.add("urgent");
+                pPrio.textContent = "Urgent";
+                break
+            case "1":
+                task.classList.add("critical");
+                pPrio.textContent = "Critical";
+                break
+        }
 
         chkbox.addEventListener("click", () => {
             task.classList.toggle("crossed");
             project.entries[i].done = project.entries[i].done ? false : true;
+            chkbox.classList.toggle("checked");
         })
 
-        let del = document.createElement("button");
-        del.setAttribute("type", "button");
-        del.textContent = "Delete";
+        let del = document.createElement("img");
+        del.setAttribute("src", "./assets/icons/delete.svg");
+        del.setAttribute("id", "del");
         del.addEventListener("click", () => {
             project.entries.splice(i, 1);
             showTaskList(project);
@@ -159,18 +173,15 @@ const createForm = (project, btn) => {
 
     let notUrgent = document.createElement("option");
     notUrgent.textContent = "Not urgent";
-    notUrgent.value = "Not urgent";
-    notUrgent.setAttribute("id", "notUrgent");
+    notUrgent.value = "3";
 
     let urgent = document.createElement("option");
     urgent.textContent = "Urgent";
-    urgent.value = "Urgent";
-    urgent.setAttribute("id", "urgent");
+    urgent.value = "2";
 
     let critical = document.createElement("option");
     critical.textContent = "Critical";
-    critical.value = "Critical";
-    critical.setAttribute("id", "critical");
+    critical.value = "1";
 
     prioSelect.appendChild(notUrgent);
     prioSelect.appendChild(urgent);
@@ -196,8 +207,9 @@ const createForm = (project, btn) => {
 
 const showForm = (project) => {
 
-    let btn = document.createElement("button");
-    btn.textContent = "Add entry";
+    let btn = document.createElement("img");
+    btn.setAttribute("id", "addTask");
+    btn.setAttribute("src", "./assets/icons/pencil-plus.svg");
     btn.addEventListener("click", () => {
         createForm(project, btn);
     })
@@ -232,7 +244,7 @@ const grabFormInfo = () => {
     let name = document.querySelector("#name").value;
     let desc = document.querySelector("#desc").value;
     let ddl = document.querySelector("#ddl").value;
-    let prio = document.querySelector("#prio").value;
+    let prio = Number(document.querySelector("#prio").value);
 
     return {name, desc, ddl, prio};
 }
@@ -248,8 +260,9 @@ const addToTaskList = (project) => {
             done: false
         }
         project.entries.push(task);
+        project.entries.sort((firstEntry, secondEntry) => firstEntry.prio - secondEntry.prio);
         showTaskList(project);
     }
 }
 
-export { buildDOM, showTaskList };
+export { buildDOM, showTaskList, emptyAll };
