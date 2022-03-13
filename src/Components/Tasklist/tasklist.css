@@ -2,14 +2,59 @@
     grid-column: 2;
     grid-row: 2;
     background: yellow;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .task {
-    display: flex;
+    width: 33rem;
+    display: grid;
+    grid-template-columns: 0.1fr repeat(4, 0.5fr) 0.2fr;
+    align-items: center;
+    column-gap: 0.4rem;
+    justify-items: center;
+    background: white;
+    color: black;
+    margin-bottom: 0.5rem;
+}
+
+.legendTask {
+    margin-top: 1rem;
+    background: none;
+}
+
+.topName {
+    grid-column: 2;
+}
+
+.topDesc {
+    grid-column: 3;
+}
+
+.topDdl {
+    grid-column: 4;
+}
+
+.topPrio {
+    grid-column: 5;
+}
+
+.topName, .topDesc {
+    justify-self: start;
+}
+
+.chk {
+    justify-self: end;
+    margin-right: 0.3rem;
+}
+
+.name, .desc {
+    justify-self: start;
 }
 
 .crossed {
-    text-decoration: line-through;
+    color: gray;
 }
 
 .disabled {
@@ -19,4 +64,24 @@
 #taskListTitle {
     font-size: 3rem;
     /* color: white; */
+}
+
+#newTask {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    border: 1px solid black;
+    padding: 1rem;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+#close {
+    align-self: flex-end;
 }

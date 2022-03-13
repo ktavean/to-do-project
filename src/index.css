@@ -16,14 +16,3 @@ body {
     grid-template-rows: 0.2fr 2fr;
 }
 
-#newTask {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 30%;
-    left: 50%;
-}
-
-.hidden {
-    visibility: hidden;
-}

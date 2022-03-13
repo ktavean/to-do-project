@@ -27,6 +27,36 @@ const showTaskList = (project) => {
     title.textContent = "Tasklist";
     taskList.appendChild(title);
 
+    // what each item represents at the top
+
+    let legend = document.createElement("div");
+    legend.setAttribute("class", "task");
+    legend.classList.add("legendTask");
+
+    let legendName = document.createElement("p");
+    legendName.textContent = "Task name";
+    legendName.setAttribute("class", "topName");
+
+    let legendDesc = document.createElement("p");
+    legendDesc.textContent = "Task description";
+    legendDesc.setAttribute("class", "topDesc");
+
+    let legendDdl = document.createElement("p");
+    legendDdl.textContent = "Task deadline";
+    legendDdl.setAttribute("class", "topDdl");
+
+    let legendPrio = document.createElement("p");
+    legendPrio.textContent = "Task Priority";
+    legendPrio.setAttribute("class", "topPrio");
+
+    legend.appendChild(legendName);
+    legend.appendChild(legendDesc);
+    legend.appendChild(legendDdl);
+    legend.appendChild(legendPrio);
+
+    taskList.appendChild(legend);
+
+
     for (let i = 0; i < project.entries.length; i++) {
 
         let task = document.createElement("div");
@@ -34,18 +64,44 @@ const showTaskList = (project) => {
 
         let chkbox = document.createElement("input");
         chkbox.setAttribute("type", "checkbox");
+        chkbox.setAttribute("class", "chk");
 
-        let p = document.createElement("p");
-        p.textContent = project.entries[i].value;
-        project.entries[i].done ? (chkbox.checked = true, p.classList.add("crossed")) : chkbox.checked = false;
+        let pName = document.createElement("p");
+        pName.setAttribute("class", "name");
+        pName.textContent = `${project.entries[i].value}`;
+        project.entries[i].done ? (chkbox.checked = true, task.classList.add("crossed")) : chkbox.checked = false;
+
+        let pDesc = document.createElement("p");
+        pDesc.setAttribute("class", "desc");
+        pDesc.textContent = `${project.entries[i].desc}`;
+
+        let pDdl = document.createElement("p");
+        pDdl.setAttribute("class", "ddl");
+        pDdl.textContent = `${project.entries[i].ddl}`;
+
+        let pPrio = document.createElement("p");
+        pPrio.setAttribute("class", "prio");
+        pPrio.textContent = `${project.entries[i].prio}`;
 
         chkbox.addEventListener("click", () => {
-            p.classList.toggle("crossed");
+            task.classList.toggle("crossed");
             project.entries[i].done = project.entries[i].done ? false : true;
         })
-        
+
+        let del = document.createElement("button");
+        del.setAttribute("type", "button");
+        del.textContent = "Delete";
+        del.addEventListener("click", () => {
+            project.entries.splice(i, 1);
+            showTaskList(project);
+        })
+
         task.appendChild(chkbox);
-        task.appendChild(p);
+        task.appendChild(pName);
+        task.appendChild(pDesc);
+        task.appendChild(pDdl);
+        task.appendChild(pPrio);
+        task.appendChild(del);
 
         taskList.appendChild(task);
     }
@@ -60,6 +116,17 @@ const createForm = (project, btn) => {
     btn.classList.add("disabled");
 
     let form = document.querySelector("#newTask");
+
+    let close = document.createElement("button");
+    close.setAttribute("type", "button");
+    close.setAttribute("id", "close");
+    close.textContent = "X";
+    close.addEventListener("click", () => {
+        deleteForm(form);
+        btn.classList.remove("disabled");
+    });
+
+    // name, desc, deadline, prio
 
     let nameLabel = document.createElement("label");
     nameLabel.setAttribute("for", "name");
@@ -79,15 +146,37 @@ const createForm = (project, btn) => {
     ddlLabel.setAttribute("for", "ddl");
     ddlLabel.textContent = "Task deadline:"
     let ddlInput = document.createElement("input");
-    ddlInput.setAttribute("type", "text");
+    ddlInput.setAttribute("type", "date");
     ddlInput.setAttribute("id", "ddl");
 
     let prioLabel = document.createElement("label");
     prioLabel.setAttribute("for", "prio");
     prioLabel.textContent = "Task priority:"
-    let prioInput = document.createElement("input");
-    prioInput.setAttribute("type", "text");
-    prioInput.setAttribute("id", "prio");
+    let prioSelect = document.createElement("select");
+    prioSelect.setAttribute("id", "prio");
+
+    // options
+
+    let notUrgent = document.createElement("option");
+    notUrgent.textContent = "Not urgent";
+    notUrgent.value = "Not urgent";
+    notUrgent.setAttribute("id", "notUrgent");
+
+    let urgent = document.createElement("option");
+    urgent.textContent = "Urgent";
+    urgent.value = "Urgent";
+    urgent.setAttribute("id", "urgent");
+
+    let critical = document.createElement("option");
+    critical.textContent = "Critical";
+    critical.value = "Critical";
+    critical.setAttribute("id", "critical");
+
+    prioSelect.appendChild(notUrgent);
+    prioSelect.appendChild(urgent);
+    prioSelect.appendChild(critical);
+
+    // submit button
 
     let submit = document.createElement("button");
     submit.setAttribute("type", "button");
@@ -98,10 +187,11 @@ const createForm = (project, btn) => {
         deleteForm(form);
     });
 
-    let formArr = [nameLabel, nameInput, descLabel, descInput, ddlLabel, ddlInput, prioLabel, prioInput, submit]
+    let formArr = [close, nameLabel, nameInput, descLabel, descInput, ddlLabel, ddlInput, prioLabel, prioSelect, submit]
     for (let element of formArr) {
         form.appendChild(element);
     }
+    form.classList.toggle("hidden");
 }
 
 const showForm = (project) => {
@@ -121,6 +211,7 @@ const deleteForm = (form) => {
     for (let i = 0; i < count; i++) {
         form.children[0].remove();
     }
+    form.classList.toggle("hidden");
 }
 
 // code is dumpster fire, :(

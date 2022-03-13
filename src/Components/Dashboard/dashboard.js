@@ -10,24 +10,35 @@ const dashboard = () => {
     
     // here starts the project creation process
 
+    let topPart = document.createElement("div");
+    topPart.setAttribute("id", "topPart");
+
+    let bottomPart = document.createElement("div");
+    bottomPart.setAttribute("id", "bottomPart");
+
     let input = document.createElement("input");
     input.setAttribute("type", "text");
-    dashboard.appendChild(input);
+    topPart.appendChild(input);
 
-    let btn = document.createElement("button");
-    btn.textContent = "Press me!";
+    let btn = document.createElement("img");
+    btn.setAttribute("src", "./assets/icons/plus.svg");
+    btn.setAttribute("id", "add");
     btn.addEventListener("click", () => {
         let project = new projectFactory(input.value);
         let p = document.createElement("p");
         p.setAttribute("class", "project");
         p.textContent = project.name;
+        input.value = "";
         p.addEventListener("click", () => {
             showTaskList(project);
             changeTitle(project.name);
         })
-        dashboard.appendChild(p);
+        bottomPart.appendChild(p);
     })
-    dashboard.appendChild(btn);
+    topPart.appendChild(btn);
+
+    dashboard.appendChild(topPart);
+    dashboard.appendChild(bottomPart);
 
     //it ends here
 

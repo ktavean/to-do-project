@@ -2,9 +2,25 @@
     grid-column: 1;
     grid-row: span 2;
     background-color: red;
+    display: flex;
+    flex-direction: column;
 }
 
 .project {
     cursor: pointer;
     font-size: 1.5rem;
+}
+
+#topPart {
+    display: flex;
+    align-items: center;
+}
+
+#bottomPart {
+    display: flex;
+    flex-direction: column;
+}
+
+#add {
+    cursor: pointer;
 }
