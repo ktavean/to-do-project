@@ -20,9 +20,9 @@ const header = () => {
 
 }
 
-const changeTitle = (project) => {
+const changeTitle = (projectName) => {
     let title = document.querySelector("#title");
-    title.textContent = project.name;
+    title.textContent = projectName;
     let delProj = document.querySelector("#delProj");
     delProj.setAttribute("src", "./assets/icons/delete.svg");
     delProj.addEventListener("click", () => {

@@ -99,6 +99,9 @@ const showTaskList = (project) => {
         chkbox.addEventListener("click", () => {
             task.classList.toggle("crossed");
             project.entries[i].done = project.entries[i].done ? false : true;
+            if (localStorage) {
+                localStorage.setItem(project.name, JSON.stringify(project.entries))
+            }
             chkbox.classList.toggle("checked");
         })
 
@@ -107,6 +110,9 @@ const showTaskList = (project) => {
         del.setAttribute("id", "del");
         del.addEventListener("click", () => {
             project.entries.splice(i, 1);
+            if (localStorage) {
+                localStorage.setItem(project.name, JSON.stringify(project.entries))
+            }
             showTaskList(project);
         })
 
@@ -237,6 +243,7 @@ const addToTaskList = (project) => {
         project.entries.push(task);
         project.entries.sort((firstEntry, secondEntry) => firstEntry.prio - secondEntry.prio);
         showTaskList(project);
+        localStorage.setItem(project.name, JSON.stringify(project.entries));
     } else {
         alert("Please enter a name for the task!");
         createForm(project);

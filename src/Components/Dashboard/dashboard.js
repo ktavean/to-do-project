@@ -10,9 +10,6 @@ const dashboard = () => {
     
     // here starts the project creation process
 
-    let topPart = document.createElement("div");
-    topPart.setAttribute("id", "topPart");
-
     let bottomPart = document.createElement("div");
     bottomPart.setAttribute("id", "bottomPart");
 
@@ -20,6 +17,29 @@ const dashboard = () => {
     bottomTitle.textContent = "Projects";
 
     bottomPart.appendChild(bottomTitle);
+
+    if (localStorage) {
+        for (let i = 0; i < localStorage.length; i++) {
+            let p = document.createElement("p");
+            p.setAttribute("class", "project");
+            let localPName = localStorage.key(i);
+            let pItem = JSON.parse(localStorage.getItem(localPName));
+            let project = new projectFactory(localPName);
+            for (let i = 0; i < pItem.length; i++) {
+                project.entries.push(pItem[i]);
+            }
+            p.textContent = project.name;
+            bottomPart.appendChild(p);
+            p.addEventListener("click", () => {
+                showTaskList(project);
+                changeTitle(project.name);
+            })
+            bottomPart.appendChild(p);
+        }
+    }
+
+    let topPart = document.createElement("div");
+    topPart.setAttribute("id", "topPart");
 
     let input = document.createElement("input");
     input.setAttribute("type", "text");
@@ -36,7 +56,7 @@ const dashboard = () => {
         input.value = "";
         p.addEventListener("click", () => {
             showTaskList(project);
-            changeTitle(project);
+            changeTitle(project.name);
         })
         bottomPart.appendChild(p);
     })
@@ -55,6 +75,9 @@ const delProject = (projectName) => {
     for (let element of bottomPart.children) {
         if (element.textContent === projectName) {
             element.remove();
+            if (localStorage) {
+                localStorage.removeItem(projectName);
+            }
         }
     }
 }
