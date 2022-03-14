@@ -10,3 +10,7 @@
     color: black;
     margin: 0.5rem;
 }
+
+#delProj {
+    cursor: pointer;
+}

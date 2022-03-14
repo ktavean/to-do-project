@@ -127,7 +127,7 @@ const showTaskList = (project) => {
 
 const createForm = (project, btn) => {
 
-    btn.remove();
+    if (btn) {btn.remove()};
 
     let taskList = grabTaskList();
 
@@ -237,6 +237,9 @@ const addToTaskList = (project) => {
         project.entries.push(task);
         project.entries.sort((firstEntry, secondEntry) => firstEntry.prio - secondEntry.prio);
         showTaskList(project);
+    } else {
+        alert("Please enter a name for the task!");
+        createForm(project);
     }
 }
 

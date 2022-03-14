@@ -112,7 +112,7 @@
 }
 
 .urgent {
-    background: rgb(173, 173, 0);
+    background: yellow;
 }
 
 .critical {
