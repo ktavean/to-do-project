@@ -4,5 +4,5 @@ The project every programmer builds. It's become a kind of a "Hello World" proje
 
 **Access it [here](https://ktavean.github.io/to-do-project/)**
 
-![Picture of the the to-do app](https://i.imgur.com/20xMYVc.png)
+![Picture of the the to-do app](https://i.imgur.com/OIZzJ8w.png)
 
